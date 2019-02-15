@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import * as validate from './validate'
-import AuthError from './AuthError'
+import AuthTheWallError from './AuthTheWallError'
 
 export default (config) => {
 
@@ -23,7 +23,7 @@ export default (config) => {
 
 		if (!token) {
 			return null
-			//throw new AuthError('Token not found', 400)
+			//throw new AuthTheWallError('Token not found', 400)
 		}
 
 		try {
@@ -33,10 +33,10 @@ export default (config) => {
 		} catch (err) {
 
 			if (err.name == 'JsonWebTokenError' && err.message == 'jwt malformed') {
-				throw new AuthError('Token malformed', 401)
+				throw new AuthTheWallError('Token malformed', 401)
 			}
 
-			throw new AuthError('Invalid token', 401)
+			throw new AuthTheWallError('Invalid token', 401)
 		}
 	}
 

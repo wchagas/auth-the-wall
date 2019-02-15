@@ -2,9 +2,9 @@ import * as validate from './validate'
 import _acl from './acl'
 import _token from './token'
 import compose from './compose'
-import AuthError from './AuthError'
+import AuthTheWallError from './AuthTheWallError'
 
-export {AuthError as AuthTheWallError}
+export {AuthTheWallError as AuthTheWallError}
 
 export default (config) => {
 
@@ -48,6 +48,11 @@ export default (config) => {
 
 			if (aclRule) {
 				const hasPermission = acl.hasPermission(user.role, aclRule.roles)
+
+				if (!hasPermission) {
+					throw new AuthTheWallError('Permission denied', 403)
+				}
+
 				if (aclRule.rules) {
 					await compose(...aclRule.rules)({req, res, next})
 				}
@@ -55,7 +60,7 @@ export default (config) => {
 				return next()
 			}
 
-			throw new AuthError('Permission denied', 403)
+			throw new AuthTheWallError('Permission denied', 403)
 
 		} catch(e) {
 			const {statusCode, message, content} = e

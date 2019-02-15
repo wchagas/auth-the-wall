@@ -1,6 +1,6 @@
 import {assert, expect, should} from 'chai'
 import httpMocks from 'node-mocks-http'
-import AuthError from '../src/AuthError'
+import AuthTheWallError from '../src/AuthTheWallError'
 import {ROLES} from './constants'
 import Auth from '../src/'
 
@@ -22,7 +22,7 @@ describe('Token', function() {
 
 	it("Token malformed", function() {
 		expect(() => middlewareTest.token.get('tests')).to.throw().and.to.satisfy((err) => {
-		  return err.name === 'AuthError' && err.statusCode === 401;
+		  return err.name === 'AuthTheWallError' && err.statusCode === 401;
 		})
 	})
 
@@ -34,7 +34,7 @@ describe('Token', function() {
 			role: 'admin'
 		})
 		expect(() => middlewareTestExpiredToken.token.get(expiredToken)).to.throw().and.to.satisfy((err) => {
-		  return err.name === 'AuthError' && err.statusCode === 401;
+		  return err.name === 'AuthTheWallError' && err.statusCode === 401;
 		})
 	})
 

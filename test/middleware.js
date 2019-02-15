@@ -3,7 +3,7 @@ import {assert, expect, should} from 'chai'
 import httpMocks from 'node-mocks-http'
 import express, {Router} from 'express'
 import {ROLES} from './constants'
-import AuthError from '../src/AuthError'
+import AuthTheWallError from '../src/AuthTheWallError'
 import Auth from '../src/'
 
 const app = express()
@@ -58,7 +58,7 @@ const belongsToEditor = ({req, res, next}) => {
 	}
 
 	if (post.user.id != req.user.id) {
-		throw new AuthError(`You can't edit this post`, 401)
+		throw new AuthTheWallError(`You can't edit this post`, 401)
 	}
 
 	return {req, res, next}
