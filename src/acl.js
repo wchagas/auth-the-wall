@@ -4,7 +4,7 @@ module.exports = (options) => {
 
 
 	/**
-	* @var {Array} resources
+	* @var {Array} acl
 	*/
 	let data = []
 
@@ -12,8 +12,8 @@ module.exports = (options) => {
 
 	/**
 	 * add
-	 * @param {Array}
-	 * @return {Array}
+	 * @param {Array} acl
+	 * @return {Array} all
 	 */
 	const add = (acl) => {
 
@@ -54,7 +54,7 @@ module.exports = (options) => {
 	 * find
 	 * @param {String} resource
 	 * @param {String} method
-	 * @return {Object}
+	 * @return {Object|Boolean}
 	 */
 	const find = (resource, method) => {
 
@@ -72,9 +72,9 @@ module.exports = (options) => {
 
 	/**
 	 * hasPermission
-	 * @param {String} resource
-	 * @param {String} method
-	 * @return {Object}
+	 * @param {String} role
+	 * @param {Array} roles
+	 * @return {Boolean}
 	 */
 	const hasPermission = (role, roles) => {
 
@@ -92,7 +92,10 @@ module.exports = (options) => {
 
 
 	/**
+	*
+	* TODO: Another option?
 	* If using Router() so req.route.path will not be able to read the path
+	*
 	* @param {String} url 		/:id
 	* @param {String} fullUrl 	/posts/1
 	* @param {Object} params
