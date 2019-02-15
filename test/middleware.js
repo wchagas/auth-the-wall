@@ -11,8 +11,8 @@ const router = Router()
 
 const auth = Auth({
 	roles: ROLES,
-	secret: 'abc',
-	expiresIn: '1min',
+	privateKey: 'abc',
+	expiresIn: '1 min',
 })
 
 const validToken = auth.token.set({
@@ -49,7 +49,7 @@ const posts = {
 	},
 }
 
-const belongsToEditor = ({res, req, next}) => {
+const belongsToEditor = ({req, res, next}) => {
 
 	const post = posts[req.params.id]
 
@@ -61,7 +61,7 @@ const belongsToEditor = ({res, req, next}) => {
 		throw new AuthError(`You can't edit this post`, 401)
 	}
 
-	return {res, req, next}
+	return {req, res, next}
 }
 
 auth.acl.add([
@@ -136,25 +136,5 @@ describe('Middleware', function() {
 	})
 
 
-
-
-	// it("Accept ", function(done) {
-	//
-	// 	app.get('/user', function(req, res) {
-	// 		res.status(200).json(req.user)
-	// 	})
-	//
-	// 	request(app)
-	// 	  .get('/user')
-	// 	  .expect('Content-Type', /json/)
-	// 	  .expect(200)
-	// 	  .end(function(err, res) {
-	// 		expect(res.body).to.be.an('null')
- //  	        //expect(res.body).to.have.property('message', 'Token not found')
-	//
-	// 	    if (err) done(err)
-	// 		done()
-	// 	  })
-	// })
 
 })

@@ -6,13 +6,13 @@ import Auth from '../src/'
 
 const middlewareTest = Auth({
 	roles: ROLES,
-	secret: 'abc',
+	privateKey: 'abc',
 	expiresIn: '1min',
 })
 
 const middlewareTestExpiredToken = Auth({
 	roles: ROLES,
-	secret: 'abc',
+	privateKey: 'abc',
 	expiresIn: '0ms',
 })
 

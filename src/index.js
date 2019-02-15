@@ -4,19 +4,20 @@ import _token from './token'
 import compose from './compose'
 import AuthError from './AuthError'
 
+export {AuthError as AuthTheWallError}
 
 export default (config) => {
 
-	if (!validate.hasOwnProperties(config, ['expiresIn', 'secret', 'roles'])) {
-		throw new TypeError('Invalid options! Pass role, secret and expiresIn by parameter')
+	if (!validate.hasOwnProperties(config, ['expiresIn', 'privateKey', 'roles'])) {
+		throw new TypeError('Invalid options! Pass role, privateKey and expiresIn by parameter')
 	}
 
 	if (!validate.isString(config.expiresIn)) {
 		throw new TypeError('Invalid options! expiresIn must be string')
 	}
 
-	if (!validate.isString(config.secret)) {
-		throw new TypeError('Invalid options! secret must be string')
+	if (!validate.isString(config.privateKey)) {
+		throw new TypeError('Invalid options! privateKey must be string')
 	}
 
 	if (!validate.isArray(config.roles) && validate.isEmpty(config.roles)) {

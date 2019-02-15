@@ -9,7 +9,7 @@ export default (config) => {
 	* @param {Object} data
 	*/
 	const set = (data) => {
-		return jwt.sign(data, config.secret, {
+		return jwt.sign(data, config.privateKey, {
 			expiresIn: config.expiresIn
 		})
 	}
@@ -28,7 +28,7 @@ export default (config) => {
 
 		try {
 
-			return jwt.verify(token.substr(token.indexOf(' ') + 1), config.secret)
+			return jwt.verify(token.substr(token.indexOf(' ') + 1), config.privateKey)
 
 		} catch (err) {
 

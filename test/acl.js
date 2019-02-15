@@ -10,7 +10,7 @@ describe('Acl', function() {
 	it("Get Auth is a function and return an array", function() {
 		const auth = Auth({
 			roles: ROLES,
-			secret: 'abc',
+			privateKey: 'abc',
 			expiresIn: 'abc',
 		})
 		expect(auth.acl.get).to.be.an('function')
@@ -23,7 +23,7 @@ describe('Acl', function() {
 	it("Add acl and return all data", function() {
 		const auth = Auth({
 			roles: ROLES,
-			secret: 'abc',
+			privateKey: 'abc',
 			expiresIn: 'abc',
 		})
 
@@ -49,7 +49,7 @@ describe('Acl', function() {
 	it("Get acl", function() {
 		const auth = Auth({
 			roles: ROLES,
-			secret: 'abc',
+			privateKey: 'abc',
 			expiresIn: 'abc',
 		})
 
@@ -72,7 +72,7 @@ describe('Acl', function() {
 	it("Find ", function() {
 		const auth = Auth({
 			roles: ROLES,
-			secret: 'abc',
+			privateKey: 'abc',
 			expiresIn: 'abc',
 		})
 
@@ -104,7 +104,7 @@ describe('Acl', function() {
 	it("HasPermission", function() {
 		const auth = Auth({
 			roles: ROLES,
-			secret: 'abc',
+			privateKey: 'abc',
 			expiresIn: 'abc',
 		})
 
@@ -139,7 +139,7 @@ describe('Acl', function() {
 
 		const auth = Auth({
 			roles: ROLES,
-			secret: 'abc',
+			privateKey: 'abc',
 			expiresIn: 'abc',
 		})
 
