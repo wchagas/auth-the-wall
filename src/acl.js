@@ -18,7 +18,7 @@ module.exports = (options) => {
 	const add = (acl) => {
 
 		if (!validate.isArray(acl) || validate.isEmpty(acl)) {
-			throw new TypeError('Invalid resource! Pass an array by parameter')
+			throw new TypeError('Invalid route! Pass an array by parameter')
 		}
 
 		const normalizeRoutes = acl => {
@@ -52,16 +52,16 @@ module.exports = (options) => {
 
 	/**
 	 * find
-	 * @param {String} resource
+	 * @param {String} route
 	 * @param {String} method
 	 * @return {Object|Boolean}
 	 */
-	const find = (resource, method) => {
+	const find = (route, method) => {
 
 		method = method.toUpperCase()
 
 		const acl = data.find(acl => {
-			return acl.routes.indexOf(resource) !== -1
+			return acl.routes.indexOf(route) !== -1
 				&& acl.methods.indexOf(method) !== -1
 		})
 
