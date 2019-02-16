@@ -199,3 +199,14 @@ app.use('/posts/:id', auth.middleware, (req, res) => {
 	   }
 	]
 	```
+
+***
+
+#### License
+Copyright (c) 2019 Willy Chagas
+Licensed under the [MIT license](LICENSE).
+
+
+***
+
+Project created by [Willy Chagas](https://atah.com.br).

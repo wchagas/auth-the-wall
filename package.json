@@ -1,7 +1,8 @@
 {
 	"name": "auth-the-wall",
+	"version": "1.0.0",
 	"author": "Willy Chagas <chagaswc89@gmail.com",
-	"description": "Bearer Authentication and ACL for node.js",
+	"description": "Middleware for express with supports to the Bearer Authentication and ACL (Access Control List)",
 	"license": "MIT",
 	"main": "./lib/index.js",
 	"scripts": {
@@ -36,10 +37,6 @@
 		"rimraf": "^2.6.2",
 		"supertest": "^3.4.2"
 	},
-	"files": [
-		"lib",
-		"src"
-	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/wchagas/auth-the-wall.git"
@@ -47,7 +44,7 @@
 	"bugs": {
 		"url": "https://github.com/wchagas/auth-the-wall/issues"
 	},
-	"homepage": "https://github.com/wchagas/auth-the-walle#readme",
+	"homepage": "https://github.com/wchagas/auth-the-wall#readme",
 	"keywords": [
 		"node",
 		"authentication",
