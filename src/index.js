@@ -27,7 +27,12 @@ export default (config) => {
 	config.roles = [...config.roles, 'guest']
 
 	const acl = _acl(config)
+
 	const token = _token(config)
+
+	if (validate.isArray(config.acl) && !validate.isEmpty(config.acl)) {
+		acl.add(config.acl)
+	}
 
 	const middleware = async function(req, res, next) {
 		try {
