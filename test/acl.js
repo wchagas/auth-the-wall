@@ -33,7 +33,7 @@ describe('Acl', function() {
 
 		const aclAdded = auth.acl.add([
 			{
-				resources: '/post/',
+				routes: '/post/',
 				methods: ['POST'],
 				roles: ['guest', 'editor', 'admin']
 			}
@@ -55,7 +55,7 @@ describe('Acl', function() {
 
 		auth.acl.add([
 			{
-				resources: '/post/',
+				routes: '/post/',
 				methods: ['POST'],
 				roles: ['guest', 'editor', 'admin']
 			}
@@ -78,12 +78,12 @@ describe('Acl', function() {
 
 		const add = [
 			{
-				resources: '/post/',
+				routes: '/post/',
 				methods: ['POST'],
 				roles: ['guest', 'editor', 'admin']
 			},
 			{
-				resources: ['/post/', '/post/:id'],
+				routes: ['/post/', '/post/:id'],
 				methods: ['GET', 'POST'],
 				roles: ['editor', 'admin']
 			}
@@ -110,12 +110,12 @@ describe('Acl', function() {
 
 		auth.acl.add([
 			{
-				resources: '/post/',
+				routes: '/post/',
 				methods: ['POST'],
 				roles: ['guest', 'editor']
 			},
 			{
-				resources: ['/post/', '/post/:id'],
+				routes: ['/post/', '/post/:id'],
 				methods: ['GET', 'POST'],
 				roles: ['editor'],
 				rules: [

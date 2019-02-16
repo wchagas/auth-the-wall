@@ -67,12 +67,12 @@ const belongsToEditor = ({req, res, next}) => {
 auth.acl.add([
 	// view single, show all for all users
 	{
-		resources: '/posts/',
+		routes: '/posts/',
 		methods: ['GET'],
 		roles: ['guest']
 	},
 	{
-		resources: '/posts/:id',
+		routes: '/posts/:id',
 		methods: ['GET'],
 		roles: ['guest']
 	},
@@ -81,7 +81,7 @@ auth.acl.add([
 	// put and edit
 	// editor can only manage what he has created
 	{
-		resources: ['/posts/:id'],
+		routes: ['/posts/:id'],
 		methods: ['PUT', 'DELETE'],
 		roles: ['editor'],
 		rules: [

@@ -21,10 +21,10 @@ module.exports = (options) => {
 			throw new TypeError('Invalid resource! Pass an array by parameter')
 		}
 
-		const normalizeResources = acl => {
+		const normalizeRoutes = acl => {
 
 			acl.methods = acl.methods.map(m => m.toUpperCase())
-			acl.resources = !validate.isArray(acl.resources) ? [acl.resources] : acl.resources
+			acl.routes = !validate.isArray(acl.routes) ? [acl.routes] : acl.routes
 			acl.rules = acl.rules || null
 			acl.rules = validate.isFunction(acl.rules) ? [acl.rules] : acl.rules
 
@@ -33,7 +33,7 @@ module.exports = (options) => {
 
 		data = [
 			...data,
-			...acl.map(normalizeResources)
+			...acl.map(normalizeRoutes)
 		]
 
 		return data
@@ -42,7 +42,7 @@ module.exports = (options) => {
 
 
 	/**
-	 * getResources
+	 * getRoutes
 	 */
 	const get = () => {
 		return data
@@ -61,7 +61,7 @@ module.exports = (options) => {
 		method = method.toUpperCase()
 
 		const acl = data.find(acl => {
-			return acl.resources.indexOf(resource) !== -1
+			return acl.routes.indexOf(resource) !== -1
 				&& acl.methods.indexOf(method) !== -1
 		})
 

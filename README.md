@@ -31,8 +31,8 @@ const auth = Auth({
 	],
 	acl: [
 		{
-			resources: '/post/:id',
-			methods: ['GET', 'PUT', 'DELETE'],
+			routes: '/posts/:id',
+			methods: ['PUT', 'DELETE'],
 			roles: ['editor'],
 			rules: []
 		}
@@ -43,20 +43,21 @@ const auth = Auth({
 
 Now use the middleware in your routes:
 ```
-app.use('/posts/', auth.middleware, (req, res) => {
+app.delete('/posts/:id', auth.middleware, (req, res) => {
     console.log(req.user)
 })
 ```
 
 
 ### Add Resource
-You can add resources at any time by using the instance:
+You can add routes at any time by using the instance:
 ```
+import Auth from 'auth-the-wall'
 const auth = Auth({ ... })
 
 auth.addResources([
 	{
-		resources: ['/auth/:id?'],
+		routes: ['/managers/:id?'],
 		methods: ['GET', 'POST', 'PUT', 'DELETE'],
 		roles: ['admin'],
 		rules: []
@@ -83,7 +84,6 @@ const postBelongsToEditor = async ({req, res}) => {
 	})
 
 	if (!isOwner) {
-		// Use AuthTheWallError(youMessage, statusCode)
 		throw new AuthTheWallError('Permission denied', 401)
 	}
 
@@ -93,7 +93,7 @@ const postBelongsToEditor = async ({req, res}) => {
 
 auth.addResources([
 	{
-		resources: ['/auth/:id?'],
+		routes: ['/auth/:id?'],
 		methods: ['GET', 'POST', 'PUT', 'DELETE'],
 		roles: ['admin'],
 		rules: [
@@ -132,10 +132,7 @@ axios.get(endpoint, {
 	headers: {
 		Authorization: 'Bearer ${TOKEN}'
 	}
-}).then(response => {
-	// ...
 })
-
 ```
 
 Requests that contains a valid Header Authorization will allow access to the data in the token inside: `req.user:`
@@ -143,8 +140,7 @@ Requests that contains a valid Header Authorization will allow access to the dat
 
 ```
 app.use('/posts/:id', auth.middleware, (req, res) => {
-	console.log(req.user)
-	// result: { id: 1, role: 'admin', other: '...'}
+	console.log(req.user) // result: { id: 1, role: 'admin', other: '...'}
 })
 ```
 
@@ -158,11 +154,11 @@ app.use('/posts/:id', auth.middleware, (req, res) => {
 - **roles**: User groups. The sooner, more permissions. Each item is inherited from the next item.
   > Eg: ´['admin', 'manager', 'editor']` admin inherited permissions of manager, then manager inherited of editor.
 
-- **acl**: Array of objects containing rules by resources (uri):
+- **acl**: Array of objects containing rules by routes:
 
-	- **resources**: the path used to compare permissions (possibility to use array)
+	- **routes**: the path used to compare permissions (possibility to use array)
 	```
-	resources: ['/posts/:id', '/posts/:id?/comments/:id?']
+	routes: ['/posts/:id', '/posts/:id?/comments/:id?']
 	app.use('/posts/:id?', auth.middleware, (req, res) => {})
 	app.use('/posts/:id?/comments/:id?', auth.middleware, (req, res) => {})			
 	```
@@ -172,7 +168,7 @@ app.use('/posts/:id', auth.middleware, (req, res) => {
 	methods: ['POST', 'PUT', 'DELETE']
 	```
 
-	- **roles**: Groups that have access to resources
+	- **roles**: Groups that have access to routes
 	```
  	roles: ['manager'] // manager and admin will be allowed
 	```
