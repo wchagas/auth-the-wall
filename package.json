@@ -1,6 +1,6 @@
 {
 	"name": "auth-the-wall",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Willy Chagas <chagaswc89@gmail.com",
 	"description": "Middleware for express with supports to the Bearer Authentication and ACL (Access Control List)",
 	"license": "MIT",
@@ -10,6 +10,7 @@
 		"clean": "rimraf lib",
 		"examples": "node examples/",
 		"build": "BABEL_ENV=production babel src --out-dir lib",
+		"postversion": "git push && git push --tags && rm -rf build/temp",
 		"prepublish": "npm run clean && npm run test && npm run build"
 	},
 	"dependencies": {

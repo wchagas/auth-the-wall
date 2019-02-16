@@ -6,7 +6,6 @@ import Auth from '../src/'
 describe('Acl', function() {
 
 
-
 	it("Get Auth is a function and return an array", function() {
 		const auth = Auth({
 			roles: ROLES,
@@ -19,8 +18,7 @@ describe('Acl', function() {
 
 
 
-
-	it("Add acl and return all data", function() {
+	it("Error if pass invalid params", function() {
 		const auth = Auth({
 			roles: ROLES,
 			privateKey: 'abc',
@@ -30,6 +28,34 @@ describe('Acl', function() {
 		expect(auth.acl.add).to.be.an('function')
 		expect(() => auth.acl.add()).to.throw(TypeError)
 		expect(() => auth.acl.add([])).to.throw(TypeError)
+	})
+
+
+
+	it("Error if not pass required properties", function() {
+		const auth = Auth({
+			roles: ROLES,
+			privateKey: 'abc',
+			expiresIn: 'abc',
+		})
+
+		expect(() => {
+			return auth.acl.add([
+				{
+					// empty
+				}
+			])
+		}).to.throw(TypeError)
+	})
+
+
+
+	it("Add acl and return all data", function() {
+		const auth = Auth({
+			roles: ROLES,
+			privateKey: 'abc',
+			expiresIn: 'abc',
+		})
 
 		const aclAdded = auth.acl.add([
 			{

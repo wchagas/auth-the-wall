@@ -23,6 +23,10 @@ module.exports = (options) => {
 
 		const normalizeRoutes = acl => {
 
+			if (!validate.hasOwnProperties(acl, ['routes', 'methods', 'roles'])) {
+				throw new TypeError('Invalid options! Pass routes, methods and roles in acl object')
+			}
+
 			acl.methods = acl.methods.map(m => m.toUpperCase())
 			acl.routes = !validate.isArray(acl.routes) ? [acl.routes] : acl.routes
 			acl.rules = acl.rules || null
