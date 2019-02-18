@@ -1,6 +1,6 @@
 {
 	"name": "auth-the-wall",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"author": "Willy Chagas <chagaswc89@gmail.com",
 	"description": "Middleware for express with supports to the Bearer Authentication and ACL (Access Control List)",
 	"license": "MIT",
