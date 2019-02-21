@@ -1,6 +1,6 @@
 
 
-# AuthTheWall
+# ![Express Auth and ACL](assets/logo_32.png) AuthTheWall
 
 `AuthTheWall` is a middleware for express with supports to the Bearer Authentication and ACL (Access Control List).
 
