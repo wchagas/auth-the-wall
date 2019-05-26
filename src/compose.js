@@ -1,4 +1,4 @@
-import * as validate from './validate'
-import AuthTheWallError from './AuthTheWallError'
+const validate = require('./validate')
+const AuthTheWallError = require('./AuthTheWallError')
 
-export default (...funcs) => input => funcs.reduce((chain, func) => chain.then(func), Promise.resolve(input))
+module.exports = (...funcs) => input => funcs.reduce((chain, func) => chain.then(func), Promise.resolve(input))

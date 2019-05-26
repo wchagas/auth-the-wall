@@ -1,12 +1,10 @@
-import * as validate from './validate'
-import _acl from './acl'
-import _token from './token'
-import compose from './compose'
-import AuthTheWallError from './AuthTheWallError'
+const validate = require('./validate')
+const _acl = require('./acl')
+const _token = require('./token')
+const compose = require('./compose')
+const AuthTheWallError = require('./AuthTheWallError')
 
-export {AuthTheWallError as AuthTheWallError}
-
-export default (config) => {
+module.exports = (config = {}) => {
 
 	if (!validate.hasOwnProperties(config, ['expiresIn', 'privateKey', 'roles'])) {
 		throw new TypeError('Invalid options! Pass role, privateKey and expiresIn by parameter')
@@ -24,10 +22,11 @@ export default (config) => {
 		throw new TypeError('Invalid options! roles must be array')
 	}
 
+	config.hierarchy = true
+
 	config.roles = [...config.roles, 'guest']
 
 	const acl = _acl(config)
-
 	const token = _token(config)
 
 	if (validate.isArray(config.acl) && !validate.isEmpty(config.acl)) {
@@ -48,11 +47,12 @@ export default (config) => {
 
 			req.user = user
 
-			const path = acl.normalizePath(req.route.path, req.originalUrl, req.params)
-			const aclRule = acl.find(path, req.method)
+			const aclRule = acl.find(req)
+
+			console.log(aclRule)
 
 			if (aclRule) {
-				const hasPermission = acl.hasPermission(user.role, aclRule.roles)
+				const hasPermission = acl.hasPermission(aclRule, user.role, aclRule.roles)
 
 				if (!hasPermission) {
 					throw new AuthTheWallError('Permission denied', 403)

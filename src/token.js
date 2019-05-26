@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken'
-import * as validate from './validate'
-import AuthTheWallError from './AuthTheWallError'
+const jwt = require('jsonwebtoken')
+const validate = require('./validate')
+const AuthTheWallError = require('./AuthTheWallError')
 
-export default (config) => {
+module.exports = (config) => {
 
 	/**
 	* set
@@ -27,19 +27,14 @@ export default (config) => {
 		}
 
 		try {
-
 			return jwt.verify(token.substr(token.indexOf(' ') + 1), config.privateKey)
-
 		} catch (err) {
-
 			if (err.name == 'JsonWebTokenError' && err.message == 'jwt malformed') {
 				throw new AuthTheWallError('Token malformed', 401)
 			}
-
 			throw new AuthTheWallError('Invalid token', 401)
 		}
 	}
-
 
 
 	/**

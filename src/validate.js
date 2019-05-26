@@ -2,7 +2,7 @@
 /**
  * isString
  */
-export function isString(value) {
+function isString(value) {
 	return typeof value === 'string' || value instanceof String
 }
 
@@ -10,7 +10,7 @@ export function isString(value) {
 /**
  * isNumber
  */
-export function isNumber(value) {
+function isNumber(value) {
 	return typeof value === 'number' && isFinite(value)
 }
 
@@ -18,7 +18,7 @@ export function isNumber(value) {
 /**
  * isArray
  */
-export function isArray(value) {
+function isArray(value) {
 	return Array.isArray(value)
 }
 
@@ -26,7 +26,7 @@ export function isArray(value) {
 /**
  * isEqual
  */
-export function isEqual(first, last, deep = false) {
+function isEqual(first, last, deep = false) {
 	if (
 		(isArray(first) && isArray(last)) ||
 		(isObject(first) && isObject(last))
@@ -45,7 +45,7 @@ export function isEqual(first, last, deep = false) {
 /**
  * isEmpty
  */
-export function isEmpty(value) {
+function isEmpty(value) {
 	if (isArray(value)) {
 		return value.length == 0
 	}
@@ -57,7 +57,7 @@ export function isEmpty(value) {
 /**
  * isFunction
  */
-export function isFunction(value) {
+function isFunction(value) {
 	return typeof value === 'function'
 }
 
@@ -65,7 +65,7 @@ export function isFunction(value) {
 /**
  * isObject
  */
-export function isObject(value) {
+function isObject(value) {
 	return value && typeof value === 'object' && value.constructor === Object
 }
 
@@ -73,7 +73,7 @@ export function isObject(value) {
 /**
  * isNull
  */
-export function isNull(value) {
+function isNull(value) {
 	return value === null
 }
 
@@ -81,7 +81,7 @@ export function isNull(value) {
 /**
  * isUndefined
  */
-export function isUndefined(value) {
+function isUndefined(value) {
 	return value === 'undefined'
 }
 
@@ -89,7 +89,7 @@ export function isUndefined(value) {
 /**
  * isBoolean
  */
-export function isBoolean(value) {
+function isBoolean(value) {
 	return typeof value === 'boolean'
 }
 
@@ -97,7 +97,7 @@ export function isBoolean(value) {
 /**
  * isRegExp
  */
-export function isRegExp(value) {
+function isRegExp(value) {
 	return value && typeof value === 'object' && value.constructor === RegExp
 }
 
@@ -105,7 +105,7 @@ export function isRegExp(value) {
 /**
  * isError
  */
-export function isError(value) {
+function isError(value) {
 	return value instanceof Error && typeof value.message !== 'undefined'
 }
 
@@ -113,7 +113,7 @@ export function isError(value) {
 /**
  * isSymbol
  */
-export function isSymbol(value) {
+function isSymbol(value) {
 	return typeof value === 'symbol'
 }
 
@@ -121,7 +121,7 @@ export function isSymbol(value) {
 /**
  * isDate
  */
-export function isDate(value) {
+function isDate(value) {
 	return value instanceof Date
 }
 
@@ -129,10 +129,29 @@ export function isDate(value) {
 /**
  * hasOwnProperties
  */
-export function hasOwnProperties(obj, props) {
+function hasOwnProperties(obj, props) {
 	if (!isObject(obj)) {
 		return
 	}
 
 	return props.filter(p => obj[p]).length == props.length
+}
+
+
+module.exports = {
+	isString,
+	isNumber,
+	isArray,
+	isEqual,
+	isEmpty,
+	isFunction,
+	isObject,
+	isNull,
+	isUndefined,
+	isBoolean,
+	isRegExp,
+	isError,
+	isSymbol,
+	isDate,
+	hasOwnProperties
 }

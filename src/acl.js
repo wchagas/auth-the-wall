@@ -1,4 +1,4 @@
-import * as validate from './validate'
+const validate = require('./validate')
 
 module.exports = (options) => {
 
@@ -53,16 +53,16 @@ module.exports = (options) => {
 	}
 
 
-
 	/**
 	 * find
 	 * @param {String} route
 	 * @param {String} method
 	 * @return {Object|Boolean}
 	 */
-	const find = (route, method) => {
+	const find = (req) => {
 
-		method = method.toUpperCase()
+		const route = normalizePath(req.route.path, req.originalUrl, req.params, req.query)
+		const method = req.method.toUpperCase()
 
 		const acl = data.find(acl => {
 			return acl.routes.indexOf(route) !== -1
@@ -80,7 +80,7 @@ module.exports = (options) => {
 	 * @param {Array} roles
 	 * @return {Boolean}
 	 */
-	const hasPermission = (role, roles) => {
+	const hasPermission = (aclRule, role, roles) => {
 
 		const notFound = role => options.roles.indexOf(role) == -1
 
@@ -88,9 +88,16 @@ module.exports = (options) => {
 			throw new TypeError('Role not found in config.roles')
 		}
 
-		const roleIndex = options.roles.indexOf(role)
+		const useHierarchy = () => {
+			const roleIndex = options.roles.indexOf(role)
+			return roles.some(role => options.roles.indexOf(role) >= roleIndex)
+		}
 
-		return roles.some(role => options.roles.indexOf(role) >= roleIndex)
+		if (aclRule.hasOwnProperty('hierarchy')) {
+			return aclRule.hierarchy ? useHierarchy() : roles.includes(role)
+		}
+
+		return options.hierarchy ? useHierarchy() : roles.includes(role)
 	}
 
 
@@ -105,7 +112,7 @@ module.exports = (options) => {
 	* @param {Object} params
 	* @return {String}	 		/posts/:id
 	*/
-	const normalizePath = (url, fullUrl, params) => {
+	const normalizePath = (url, fullUrl, params, query) => {
 
 		if (!url && !fullUrl) {
 			return ''
@@ -118,6 +125,9 @@ module.exports = (options) => {
 		if (validate.isObject(params)) {
 			params = Object.keys(params).filter(i => params[i] !== undefined).length
 		}
+
+		// remove query
+		fullUrl = fullUrl.replace(/\?.*/, '')
 
 		const split = value => value.split("/").filter(s => s != "")
 
