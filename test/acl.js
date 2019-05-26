@@ -115,12 +115,23 @@ describe('Acl', function() {
 			}
 		]
 
+		const req = {
+			route: {
+				path: '/:id'
+			},
+			originalUrl: '/post/1',
+			params: {id:1},
+			query: {}
+		}
+
 		auth.acl.add(add)
 
-		const finded = auth.acl.find('/post/:id', 'POST')
+		req.method = 'POST'
+		const finded = auth.acl.find(req)
 		expect(finded).to.eql(add[1])
 
-		const notFound = auth.acl.find('/post/:id', 'DELETE')
+		req.method = 'DELETE'
+		const notFound = auth.acl.find(req)
 		expect(notFound).to.equal(false)
 	})
 
@@ -134,7 +145,8 @@ describe('Acl', function() {
 			expiresIn: 'abc',
 		})
 
-		auth.acl.add([
+
+		const rules = [
 			{
 				routes: '/post/',
 				methods: ['POST'],
@@ -144,19 +156,41 @@ describe('Acl', function() {
 				routes: ['/post/', '/post/:id'],
 				methods: ['GET', 'POST'],
 				roles: ['editor'],
+				hierarchy: false,
 				rules: [
 					(res) => res,
 					(res) => res,
 				]
 			}
-		])
+		]
 
-		const first = auth.acl.find('/post/', 'POST')
-		const last = auth.acl.find('/post/:id', 'POST')
+		auth.acl.add(rules)
 
-		expect(auth.acl.hasPermission('admin', first.roles)).to.equal(true)
-		expect(auth.acl.hasPermission('editor', first.roles)).to.equal(true)
-		expect(auth.acl.hasPermission('guest', first.roles)).to.equal(true)
+		const first = auth.acl.find({
+			route: {
+				path: '/'
+			},
+			originalUrl: '/post/',
+			params: {},
+			query: {},
+			method: 'POST'
+		})
+
+		const last = auth.acl.find({
+			route: {
+				path: '/:id'
+			},
+			originalUrl: '/post/1',
+			params: {id:1},
+			query: {},
+			method: 'POST'
+		})
+
+		expect(auth.acl.hasPermission(rules[0], 'editor', first.roles)).to.equal(true)
+		expect(auth.acl.hasPermission(rules[0], 'guest', first.roles)).to.equal(true)
+
+		expect(auth.acl.hasPermission(rules[1], 'admin', first.roles)).to.equal(false)
+		expect(auth.acl.hasPermission(rules[1], 'editor', first.roles)).to.equal(true)
 	})
 
 
