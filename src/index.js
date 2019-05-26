@@ -49,8 +49,6 @@ module.exports = (config = {}) => {
 
 			const aclRule = acl.find(req)
 
-			console.log(aclRule)
-
 			if (aclRule) {
 				const hasPermission = acl.hasPermission(aclRule, user.role, aclRule.roles)
 

@@ -24,6 +24,7 @@ import Auth from 'auth-the-wall'
 const auth = Auth({
 	privateKey: '0GoGzOdDNuUOitQuxmIR1TOHOEbOmYHB',
 	expiresIn: '2 days',
+	hierarchy: false,
 	roles: [
 		'admin',
 		'manager',
