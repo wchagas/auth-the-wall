@@ -22,7 +22,14 @@ module.exports = (config = {}) => {
 		throw new TypeError('Invalid options! roles must be array')
 	}
 
-	config.hierarchy = true
+	const configDefault = {
+		hierarchy: true
+	}
+
+	config = {
+		...configDefault,
+		...config
+	}
 
 	config.roles = [...config.roles, 'guest']
 
