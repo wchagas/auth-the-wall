@@ -64,12 +64,12 @@ module.exports = (options) => {
 		const route = normalizePath(req.route.path, req.originalUrl, req.params, req.query)
 		const method = req.method.toUpperCase()
 
-		const acl = data.find(acl => {
+		const acl = data.filter(acl => {
 			return acl.routes.indexOf(route) !== -1
 				&& acl.methods.indexOf(method) !== -1
 		})
 
-		return acl || false
+		return acl
 	}
 
 

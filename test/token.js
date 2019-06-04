@@ -2,15 +2,15 @@ import {assert, expect, should} from 'chai'
 import httpMocks from 'node-mocks-http'
 import AuthTheWallError from '../src/AuthTheWallError'
 import {ROLES} from './constants'
-import Auth from '../src/'
+import AuthTheWall from '../src/'
 
-const middlewareTest = Auth({
+const middlewareTest = AuthTheWall.Auth({
 	roles: ROLES,
 	privateKey: 'abc',
 	expiresIn: '1min',
 })
 
-const middlewareTestExpiredToken = Auth({
+const middlewareTestExpiredToken = AuthTheWall.Auth({
 	roles: ROLES,
 	privateKey: 'abc',
 	expiresIn: '0ms',

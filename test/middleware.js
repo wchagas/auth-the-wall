@@ -3,13 +3,12 @@ import {assert, expect, should} from 'chai'
 import httpMocks from 'node-mocks-http'
 import express, {Router} from 'express'
 import {ROLES} from './constants'
-import AuthTheWallError from '../src/AuthTheWallError'
-import Auth from '../src/'
+import AuthTheWall from '../src/'
 
 const app = express()
 const router = Router()
 
-const auth = Auth({
+const auth = AuthTheWall.Auth({
 	roles: ROLES,
 	privateKey: 'abc',
 	expiresIn: '1 min',
@@ -58,7 +57,7 @@ const belongsToEditor = ({req, res, next}) => {
 	}
 
 	if (post.user.id != req.user.id) {
-		throw new AuthTheWallError(`You can't edit this post`, 401)
+		throw new AuthTheWall.AuthTheWallError(`You can't edit this post`, 401)
 	}
 
 	return {req, res, next}

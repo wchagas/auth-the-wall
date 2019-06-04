@@ -1,24 +1,24 @@
 import {assert, expect, should} from 'chai'
 import httpMocks from 'node-mocks-http'
 import {ROLES} from './constants'
-import Auth, {AuthTheWallError} from '../src/'
+import AuthTheWall from '../src/'
 
 
 describe('Auth', function() {
 
 	it("Accept only parameter object with roles, expiresIn and privateKey property", function() {
 
-		expect(() => Auth()).to.throw(TypeError)
+		expect(() => AuthTheWall.Auth()).to.throw(TypeError)
 
 		expect(() => {
-			return Auth({
+			return AuthTheWall.Auth({
 				roles: ROLES,
 				privateKey: 'abc',
 			})
 		}).to.throw(TypeError)
 
 		expect(() => {
-			return Auth({
+			return AuthTheWall.Auth({
 				expiresIn: '2days'
 			})
 		}).to.throw(TypeError)
@@ -27,7 +27,7 @@ describe('Auth', function() {
 
 	it("Add acl on create", function() {
 
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: '2 days',

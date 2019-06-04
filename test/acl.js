@@ -1,13 +1,13 @@
 import {assert, expect, should} from 'chai'
 import httpMocks from 'node-mocks-http'
 import {ROLES} from './constants'
-import Auth from '../src/'
+import AuthTheWall from '../src/'
 
 describe('Acl', function() {
 
 
 	it("Get Auth is a function and return an array", function() {
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: 'abc',
@@ -19,7 +19,7 @@ describe('Acl', function() {
 
 
 	it("Error if pass invalid params", function() {
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: 'abc',
@@ -33,7 +33,7 @@ describe('Acl', function() {
 
 
 	it("Error if not pass required properties", function() {
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: 'abc',
@@ -51,7 +51,7 @@ describe('Acl', function() {
 
 
 	it("Add acl and return all data", function() {
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: 'abc',
@@ -73,7 +73,7 @@ describe('Acl', function() {
 
 
 	it("Get acl", function() {
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: 'abc',
@@ -96,7 +96,7 @@ describe('Acl', function() {
 
 
 	it("Find ", function() {
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: 'abc',
@@ -128,18 +128,18 @@ describe('Acl', function() {
 
 		req.method = 'POST'
 		const finded = auth.acl.find(req)
-		expect(finded).to.eql(add[1])
+		expect(finded[0]).to.eql(add[1])
 
 		req.method = 'DELETE'
 		const notFound = auth.acl.find(req)
-		expect(notFound).to.equal(false)
+		expect(notFound.length).to.equal(0)
 	})
 
 
 
 
 	it("HasPermission", function() {
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: 'abc',
@@ -174,7 +174,7 @@ describe('Acl', function() {
 			params: {},
 			query: {},
 			method: 'POST'
-		})
+		})[0]
 
 		const last = auth.acl.find({
 			route: {
@@ -184,7 +184,7 @@ describe('Acl', function() {
 			params: {id:1},
 			query: {},
 			method: 'POST'
-		})
+		})[1]
 
 		expect(auth.acl.hasPermission(rules[0], 'editor', first.roles)).to.equal(true)
 		expect(auth.acl.hasPermission(rules[0], 'guest', first.roles)).to.equal(true)
@@ -197,7 +197,7 @@ describe('Acl', function() {
 
 	it("Normalize path", function() {
 
-		const auth = Auth({
+		const auth = AuthTheWall.Auth({
 			roles: ROLES,
 			privateKey: 'abc',
 			expiresIn: 'abc',
